@@ -40,4 +40,4 @@ for d in result:
         print("❌ Failed to delete deployment id={0} request={1}".format(
             d["id"], resp.text))
         continue
-    print("✅ Deleted deployment id={0}".format(d["id"]))
+    print("🧹 Deleted deployment id={0}".format(d["id"]))
