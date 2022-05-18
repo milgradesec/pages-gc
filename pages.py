@@ -1,6 +1,7 @@
-import requests
 import os
 from datetime import datetime
+
+import requests
 
 email = os.getenv("CLOUDFLARE_EMAIL")
 api_key = os.getenv("CLOUDFLARE_API_KEY")
