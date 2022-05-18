@@ -1,2 +1,11 @@
 # cfpages-delete-deployments
- Python script to delete old deployments from a Cloudflare Pages project
+
+Python script to delete old deployments from a Cloudflare Pages project
+
+## Usage
+
+    TODO
+
+## License
+
+    MIT License
