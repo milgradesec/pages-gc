@@ -10,7 +10,7 @@ api_key = os.getenv("CLOUDFLARE_API_KEY")
 account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
 
 # TODO: get all projects from api
-project_name = os.getenv("PAGES_PROJECT")
+project_name = os.getenv("CLOUDFLARE_PAGES_PROJECT")
 
 url = "https://api.cloudflare.com/client/v4/accounts/{0}/pages/projects/{1}/deployments".format(
     account_id, project_name)
