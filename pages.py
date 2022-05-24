@@ -31,13 +31,13 @@ for d in result:
     timedelta = datetime.now() - \
         datetime.strptime(d["created_on"], "%Y-%m-%dT%H:%M:%S.%fZ")
 
-    if timedelta.days < 30:
+    if timedelta.days < 7:
         print("🚧 Skipped deployment id={0}".format(d["id"]))
         continue
 
     resp = requests.delete(url + "/" + d["id"], headers=headers)
     if resp.status_code != 200:
-        print("❌ Failed to delete deployment id={0} request={1}".format(
+        print("❌ Failed to delete deployment id={0} response={1}".format(
             d["id"], resp.text))
         continue
     print("🧹 Deleted deployment id={0}".format(d["id"]))
