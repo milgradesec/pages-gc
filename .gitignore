@@ -1,0 +1,21 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*bin
+*.test
+*.out
+*.old
+
+# Goreleaser
+/dist
+
+# VS Code
+.vscode/
+!launch.json
+
+# Environment file
+.env
+dist/
