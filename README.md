@@ -1,6 +1,6 @@
-# cfpages-gc
+# cf-pages-gc
 
-Python script to delete old deployments from a Cloudflare Pages project.
+Small golang tool to delete old deployments from Cloudflare Pages.
 
 ## Usage
 
