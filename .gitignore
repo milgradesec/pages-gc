@@ -12,9 +12,5 @@
 # Goreleaser
 /dist
 
-# VS Code
-.vscode/
-!launch.json
-
 # Environment file
 .env
