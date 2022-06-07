@@ -12,19 +12,20 @@ import (
 )
 
 var (
-	email, apikey, accountID string
+	email, apikey, account, project string
 )
 
 func main() {
 	flag.StringVar(&email, "email", "", "Cloudflare account email")
 	flag.StringVar(&apikey, "key", "", "Cloudflare API Key")
-	flag.StringVar(&accountID, "account", "", "Cloudflare account ID")
+	flag.StringVar(&account, "account", "", "Cloudflare account ID")
+	flag.StringVar(&project, "project", "", "Pages project name")
 	flag.Parse()
 
-	if email == "" || apikey == "" || accountID == "" {
+	if email == "" || apikey == "" || account == "" {
 		email = os.Getenv("CLOUDFLARE_EMAIl")
 		apikey = os.Getenv("CLOUDFLARE_API_KEY")
-		accountID = os.Getenv("CLOUDFLARE_ACCOUNT_ID")
+		account = os.Getenv("CLOUDFLARE_ACCOUNT_ID")
 	}
 
 	api, err := cloudflare.New(apikey, email)
@@ -32,29 +33,31 @@ func main() {
 		log.Fatal(err)
 	}
 
-	projects, _, err := api.ListPagesProjects(context.TODO(), accountID, cloudflare.PaginationOptions{})
-	if err != nil {
-		log.Fatal(err)
-	}
+	if project == "" {
+		projects, _, err := api.ListPagesProjects(context.TODO(), account, cloudflare.PaginationOptions{})
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	var pagesProjects []string //nolint
-	for _, v := range projects {
-		pagesProjects = append(pagesProjects, v.Name)
-	}
+		var pagesProjects []string
+		for _, v := range projects {
+			pagesProjects = append(pagesProjects, v.Name)
+		}
 
-	var projectName string
-	prompt := &survey.Select{
-		Message: "Select a project:",
-		Options: pagesProjects,
-	}
-	err = survey.AskOne(prompt, &projectName)
-	if err != nil {
-		log.Fatal(err)
+		var project string
+		prompt := &survey.Select{
+			Message: "Select a project:",
+			Options: pagesProjects,
+		}
+		err = survey.AskOne(prompt, &project)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	opts := cloudflare.ListPagesDeploymentsParams{
-		AccountID:   accountID,
-		ProjectName: projectName,
+		AccountID:   account,
+		ProjectName: project,
 	}
 	deployments, _, err := api.ListPagesDeployments(context.TODO(), opts)
 	if err != nil {
@@ -63,8 +66,8 @@ func main() {
 
 	for _, d := range deployments {
 		opts := cloudflare.DeletePagesDeploymentParams{
-			AccountID:    accountID,
-			ProjectName:  projectName,
+			AccountID:    account,
+			ProjectName:  project,
 			DeploymentID: d.ID}
 		err = api.DeletePagesDeployment(context.TODO(), opts)
 		if err != nil {
