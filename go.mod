@@ -3,7 +3,7 @@ module github.com/milgradesec/pages-gc
 go 1.18
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.3.4
+	github.com/AlecAivazis/survey/v2 v2.3.5
 	github.com/cloudflare/cloudflare-go v0.40.0
 )
 
