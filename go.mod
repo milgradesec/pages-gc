@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.5
-	github.com/cloudflare/cloudflare-go v0.40.0
+	github.com/cloudflare/cloudflare-go v0.41.0
 )
 
 require (
@@ -19,5 +19,4 @@ require (
 	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
