@@ -1,0 +1,5 @@
+name: "pages-gc"
+description: "Action to delete old deployments from Cloudflare Pages"
+runs:
+  using: docker
+  image: build.Dockerfile
