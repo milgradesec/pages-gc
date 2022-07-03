@@ -1,20 +1,14 @@
-FROM --platform=amd64 golang:1.18.3 AS builder
-
-ARG TARGETPLATFORM
-ARG TARGETOS
-ARG TARGETARCH
+FROM golang:1.18.3 AS builder
 
 ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=${TARGETOS} \
-    GOARCH=${TARGETARCH}
+    CGO_ENABLED=0
 
 WORKDIR /go/src/app
 COPY . .
 
 RUN go build
 
-FROM gcr.io/distroless/static-debian11:nonroot
+FROM gcr.io/distroless/static-debian11
 
 COPY --from=builder /go/src/app/pages-gc /pages-gc
 
