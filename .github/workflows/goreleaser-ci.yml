@@ -1,4 +1,4 @@
-name: Check Goreleaser
+name: Goreleaser CI
 
 on: [push, pull_request]
 
