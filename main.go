@@ -26,6 +26,7 @@ func main() {
 		email = os.Getenv("CLOUDFLARE_EMAIl")
 		apikey = os.Getenv("CLOUDFLARE_API_KEY")
 		account = os.Getenv("CLOUDFLARE_ACCOUNT_ID")
+		project = os.Getenv("CLOUDFLARE_PAGES_PROJECT")
 	}
 
 	api, err := cloudflare.New(apikey, email)
