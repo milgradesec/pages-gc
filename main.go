@@ -56,20 +56,15 @@ func main() {
 	}
 
 	opts := cloudflare.ListPagesDeploymentsParams{
-		AccountID:   account,
 		ProjectName: project,
 	}
-	deployments, _, err := api.ListPagesDeployments(context.TODO(), opts)
+	deployments, _, err := api.ListPagesDeployments(context.TODO(), cloudflare.AccountIdentifier(account), opts)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for _, d := range deployments {
-		opts := cloudflare.DeletePagesDeploymentParams{
-			AccountID:    account,
-			ProjectName:  project,
-			DeploymentID: d.ID}
-		err = api.DeletePagesDeployment(context.TODO(), opts)
+		err = api.DeletePagesDeployment(context.TODO(), cloudflare.AccountIdentifier(account), project, d.ID)
 		if err != nil {
 			fmt.Printf("❌ Failed to delete deployment id=%s\n", d.ID)
 			continue
