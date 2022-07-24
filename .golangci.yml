@@ -36,7 +36,6 @@ linters:
     - varcheck
     - whitespace
     - godot
-    - godox
     - prealloc
     - exportloopref
     - promlinter
