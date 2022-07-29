@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/cloudflare/cloudflare-go"
 	"github.com/spf13/viper"
 )
@@ -15,39 +16,35 @@ var (
 )
 
 func main() {
-	viper.SetConfigFile(".env")
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath(".")
+
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok { //nolint
-			fmt.Println("Config file not found.")
+			fmt.Println("config.yml not found, reading configuration from environment.")
 		} else {
-			fmt.Printf("Error reading config file: %v\n", err)
+			fmt.Printf("Error reading configuration file: %v\n", err)
 			os.Exit(1)
 		}
 	}
 
-	if !viper.IsSet("CLOUDFLARE_EMAIL") {
-		fmt.Println("CLOUDFLARE_EMAIL not set")
-	}
-	if !viper.IsSet("CLOUDFLARE_API_KEY") {
-		fmt.Println("CLOUDFLARE_API_KEY not set")
-	}
-	if !viper.IsSet("CLOUDFLARE_ACCOUNT_ID") {
-		fmt.Println("CLOUDFLARE_ACCOUNT_ID not set")
-	}
-
-	email = viper.GetString("CLOUDFLARE_EMAIl")
-	apikey = viper.GetString("CLOUDFLARE_API_KEY")
-	account = viper.GetString("CLOUDFLARE_ACCOUNT_ID")
-
-	if viper.IsSet("CLOUDFLARE_PAGES_PROJECT") {
-		project = viper.GetString("CLOUDFLARE_PAGES_PROJECT")
-	} else {
-		// TODO: ask user
-	}
+	email = viper.GetString("cloudflare.email")
+	apikey = viper.GetString("cloudflare.api_key")
+	account = viper.GetString("cloudflare.account_id")
 
 	api, err := cloudflare.New(apikey, email)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if !viper.IsSet("cloudflare.pages_project") {
+		project, err = promptUserToSelectProject(api)
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		project = viper.GetString("cloudflare.pages_project")
 	}
 
 	if project == "all" {
@@ -55,45 +52,12 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-	}
-	/*if project == "" {
-		projects, _, err := api.ListPagesProjects(context.TODO(), account, cloudflare.PaginationOptions{})
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		var pagesProjects []string
-		for _, v := range projects {
-			pagesProjects = append(pagesProjects, v.Name)
-		}
-
-		var project string
-		prompt := &survey.Select{
-			Message: "Select a project:",
-			Options: pagesProjects,
-		}
-		err = survey.AskOne(prompt, &project)
+	} else {
+		err = purgeProject(api, project)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-
-	opts := cloudflare.ListPagesDeploymentsParams{
-		ProjectName: project,
-	}
-	deployments, _, err := api.ListPagesDeployments(context.TODO(), cloudflare.AccountIdentifier(account), opts)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, d := range deployments {
-		err = api.DeletePagesDeployment(context.TODO(), cloudflare.AccountIdentifier(account), project, d.ID)
-		if err != nil {
-			fmt.Printf("❌ Failed to delete deployment id=%s\n", d.ID)
-			continue
-		}
-		fmt.Printf("🧹 Deleted deployment id=%s\n", d.ID)
-	}*/
 }
 
 func purgeAllProjects(api *cloudflare.API) error {
@@ -129,4 +93,27 @@ func purgeProject(api *cloudflare.API, name string) error {
 		fmt.Printf("🧹 Deleted deployment id=%s project=%s\n", d.ID, d.ProjectName)
 	}
 	return nil
+}
+
+func promptUserToSelectProject(api *cloudflare.API) (string, error) {
+	resp, _, err := api.ListPagesProjects(context.TODO(), account, cloudflare.PaginationOptions{})
+	if err != nil {
+		return "", nil
+	}
+
+	var projects []string
+	for _, v := range resp {
+		projects = append(projects, v.Name)
+	}
+
+	var project string
+	prompt := &survey.Select{
+		Message: "Select a project:",
+		Options: projects,
+	}
+	err = survey.AskOne(prompt, &project)
+	if err != nil {
+		return "", err
+	}
+	return project, nil
 }

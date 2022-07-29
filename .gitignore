@@ -14,3 +14,6 @@
 
 # Environment file
 .env
+
+# Configuration
+config.yml
