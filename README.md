@@ -7,11 +7,11 @@ Small golang tool to delete old deployments from Cloudflare Pages.
 ## Usage
 
 ```shell
-export CLOUDFLARE_EMAIL=me@example.com
-export CLOUDFLARE_API_KEY=XXXXXXXXXXXX
+export CLOUDFLARE_EMAIL='user@example.com'
+export CLOUDFLARE_API_KEY='XXXXXXXXXXXX'
 
-export CLOUDFLARE_ACCOUNT_ID=XXXXXXXXX
-export CLOUDFLARE_PAGES_PROJECT=project-name
+export CLOUDFLARE_ACCOUNT_ID='XXXXXXXXX'
+export CLOUDFLARE_PAGES_PROJECT='project-name'
 
 ./pages-gc
 ```
