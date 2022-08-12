@@ -18,3 +18,5 @@ jobs:
 
       - name: Run
         uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
