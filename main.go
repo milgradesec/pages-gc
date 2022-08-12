@@ -51,7 +51,7 @@ func purgeAllProjects(api *cloudflare.API) error {
 	for _, p := range projects {
 		err = purgeProject(api, p.Name)
 		if err != nil {
-			fmt.Printf("❌ Failed to cleanup project '%s': %v", p.Name, err)
+			fmt.Printf("❌ Failed to cleanup project '%s': %v\n", p.Name, err)
 		}
 	}
 	return nil
