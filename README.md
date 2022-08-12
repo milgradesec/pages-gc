@@ -27,5 +27,9 @@ export CLOUDFLARE_EMAIL='user@example.com'
 export CLOUDFLARE_API_KEY='XXXXXXXXXXXX'
 export CLOUDFLARE_ACCOUNT_ID='XXXXXXXXX'
 
-./pages-gc -email $CLOUDFLARE_EMAIL -apikey $CLOUDFLARE_API_KEY -account $CLOUDFLARE_ACCOUNT_ID -project 'project-name'
+./pages-gc \
+      -email $CLOUDFLARE_EMAIL \
+      -apikey $CLOUDFLARE_API_KEY \
+      -account $CLOUDFLARE_ACCOUNT_ID \
+      -project 'project-name'
 ```
