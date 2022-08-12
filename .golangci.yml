@@ -40,7 +40,6 @@ linters:
     - promlinter
     - tagliatelle
     - asciicheck
-    - ifshort
     - durationcheck
     - exhaustive
     - errorlint
