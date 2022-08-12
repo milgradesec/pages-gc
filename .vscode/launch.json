@@ -7,7 +7,17 @@
             "request": "launch",
             "mode": "auto",
             "program": "${fileDirname}",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "args": [
+                "--email",
+                "",
+                "--apikey",
+                "",
+                "--account",
+                "",
+                "--project",
+                ""
+            ]
         }
     ]
 }

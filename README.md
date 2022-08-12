@@ -2,16 +2,14 @@
 
 [![CI](https://github.com/milgradesec/pages-gc/actions/workflows/ci.yml/badge.svg)](https://github.com/milgradesec/pages-gc/actions/workflows/ci.yml)
 
-Simple CLI tool to delete old deployments from Cloudflare Pages.
+Simple CLI tool to delete deployments from Cloudflare Pages.
 
 ## Usage
 
 ```shell
 export CLOUDFLARE_EMAIL='user@example.com'
 export CLOUDFLARE_API_KEY='XXXXXXXXXXXX'
-
 export CLOUDFLARE_ACCOUNT_ID='XXXXXXXXX'
-export CLOUDFLARE_PAGES_PROJECT='project-name'
 
-./pages-gc
+./pages-gc -email $CLOUDFLARE_EMAIL -apikey $CLOUDFLARE_API_KEY -account $CLOUDFLARE_ACCOUNT_ID -project 'project-name'
 ```
