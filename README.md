@@ -7,7 +7,8 @@ Simple CLI tool to delete deployments from Cloudflare Pages.
 ## Usage
 
 ```shell
-pages-gc [OPTIONS]
+Usage:
+  pages-gc [OPTIONS]
 
 Options:
   -account string
