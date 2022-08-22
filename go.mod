@@ -2,7 +2,7 @@ module github.com/milgradesec/pages-gc
 
 go 1.18
 
-require github.com/cloudflare/cloudflare-go v0.47.1
+require github.com/cloudflare/cloudflare-go v0.48.0
 
 require (
 	4d63.com/gochecknoglobals v0.1.0 // indirect
