@@ -2,7 +2,7 @@ module github.com/milgradesec/pages-gc
 
 go 1.18
 
-require github.com/cloudflare/cloudflare-go v0.70.0
+require github.com/cloudflare/cloudflare-go v0.72.0
 
 require (
 	github.com/google/go-querystring v1.1.0 // indirect
